@@ -205,8 +205,8 @@
                                     🎬 選填影片連結
                                 </label>
                                 <select id="videoSelect" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors">
-                                    <option value="" selected>❌ 無影片 (僅文案)</option>
-                                    <option value="RANDOM_ANY">🎲 隨機選擇一條影片 (每卡不同)</option>
+                                    <option value="">❌ 無影片 (僅文案)</option>
+                                    <option value="RANDOM_ANY" selected >🎲 隨機選擇一條影片 (每卡不同)</option>
                                     <!-- 完整的預設視頻連結清單 -->
                                           <optgroup label="━━━ 🆕 11/27 新增 ━━━">
                                           <option value="http://t.cn/AXLp8nCi">刘宇宁 《心念》11.27</option>
@@ -471,7 +471,7 @@
             },
             2: {
                 // 結構: Hashtag -> AI -> 空行 -> 固定連結 -> 空行 -> 提及 (所有模板都必須包含固定連結)
-                content: `#劉宇寧音樂緣計劃# | #神奇的闲鱼代言人刘宇寧# | #摩登兄弟[超話]#\n\n${QUOTE_PLACEHOLDER}\n\n${FIXED_LINKS}\n\n${MENTION_BLOCK}`,
+                content: `#刘宇宁万两MV# | #神奇的闲鱼代言人刘宇宁# | #摩登兄弟[超话]#\n\n${QUOTE_PLACEHOLDER}\n\n${FIXED_LINKS}\n\n${MENTION_BLOCK}`,
                 preview: '音樂緣計劃, 閒魚代言, 摩登兄弟超話 (含3連結)'
             },
             3: {
@@ -1014,4 +1014,5 @@
 </body>
 
 </html>
+
 
