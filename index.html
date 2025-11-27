@@ -122,6 +122,242 @@ font-weight: 600;
 .toast-info { background-color: #3b82f6; }
 
 
+/* Ensure two columns on medium screens (md) for better preview visibility */
+@media (min-width: 768px) {
+.content-grid-wrapper {
+grid-template-columns: 1fr 1fr;
+}
+}
+
+</style>
+</head>
+<body class="p-4 sm:p-8 min-h-screen flex items-center justify-center">
+
+<div class="container w-full max-w-4xl bg-white rounded-2xl shadow-xl border border-gray-100">
+<div class="header bg-gradient-to-r from-yellow-400 to-orange-500 text-white p-8 rounded-t-2xl text-center">
+<h1 class="text-3xl sm:text-4xl font-extrabold tracking-wide mb-2 flex items-center justify-center">
+<i data-lucide="sun" class="w-7 h-7 mr-3"></i> 劉宇寧誇誇團文案產生器 🌻
+</h1>
+<p class="text-sm opacity-90">作者 by 小八寶粥 | 僅供摩飯使用｜有問題可聯絡 ig: md.8bao</p>
+<p class="text-xs opacity-70 mt-1">版本號：v2.5 (2025.11.27 更新)</p>
+</div>
+
+<div class="content p-6 sm:p-8">
+
+<div class="section border-b pb-6 mb-6 border-orange-200">
+<div class="section-title text-orange-600 mb-4">
+<i data-lucide="message-square" class="w-5 h-5 text-orange-400"></i>
+評論文案（含個人ID）
+</div>
+<div class="flex items-center gap-4">
+<div class="flex-grow">
+<label for="personalIdInput" class="block mb-2 text-gray-600 text-sm font-semibold">
+輸入您的個人 ID (將自動附加到文末並轉為簡體字)：
+</label>
+<input type="text" id="personalIdInput" value="寧的向日葵"
+class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
+placeholder="例如：摩飯 ID" oninput="saveSettings()">
+</div>
+</div>
+
+
+<button class="btn w-full bg-orange-500 text-white hover:bg-orange-600 font-semibold mt-3 py-3 px-4 rounded-xl transition-colors" onclick="copyComment()">
+<i data-lucide="copy" class="w-4 h-4 mr-2"></i>
+複製完整評論文案 (簡體)
+</button>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 content-grid-wrapper">
+
+<div>
+<div class="section mb-6">
+<div class="section-title text-yellow-600 mb-4">
+<i data-lucide="list-checks" class="w-5 h-5 text-yellow-400"></i>
+貼文內容設置 (AI 批次生成)
+</div>
+
+<div class="mb-6">
+<label for="styleSelect" class="block mb-2 text-gray-600 text-sm font-semibold">
+🎨 文案生成風格：
+</label>
+<select id="styleSelect" class="w-full p-3 border border-yellow-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 appearance-none bg-white transition-colors">
+<option value="古風優雅" selected>古風優雅 (預設)</option>
+<option value="現代熱情">現代熱情 (粉絲向)</option>
+<option value="青春活力">青春活力 (清新)</option>
+<option value="詩意浪漫">詩意浪漫 (抒情)</option>
+</select>
+</div>
+
+<div class="mb-3">
+<label for="templateSelectDropdown" class="block mb-2 text-gray-600 text-sm font-semibold">
+選擇貼文模板 (Hashtag/提及/連結)：
+</label>
+<select id="templateSelectDropdown" onchange="selectTemplateDropdown(this.value)"
+class="w-full p-3 border border-yellow-500 rounded-lg focus:ring-2 focus:ring-yellow-500 transition-colors bg-white shadow-sm font-semibold">
+<option value="1" data-preview="OLAY 代言, 2025巡演, 摩登兄弟超話 (含3連結)">模板 1 (OLAY/巡演)</option>
+<option value="2" data-preview="音樂緣計劃, 閒魚代言, 摩登兄弟超話 (含3連結)">模板 2 (音樂/閒魚)</option>
+<option value="3" data-preview="新歌榜單, 騰訊音樂由你榜, 摩登兄弟超話 (含3連結)">模板 3 (新歌/榜單)</option>
+</select>
+
+
+<div id="templatePreviewSummary" class="text-sm mt-3 p-3 bg-yellow-100 text-yellow-800 rounded-lg border border-yellow-200 font-medium transition-opacity duration-300">
+</div>
+</div>
+
+
+<div class="flex items-center mt-3 pt-2">
+<input type="checkbox" id="crWatermarkCheckbox"
+class="h-5 w-5 text-yellow-600 border-gray-300 rounded focus:ring-yellow-500" onchange="saveSettings()">
+<label for="crWatermarkCheckbox" class="text-gray-700 select-none font-medium ml-2 text-sm">
+貼文底部添加「cr 見浮水印」
+</label>
+</div>
+
+<div class="grid grid-cols-1 gap-4 mt-6">
+<div class="col-span-1">
+<label for="videoSelect" class="block mb-2 text-gray-600 text-sm font-semibold">
+🎬 選填影片連結
+</label>
+<select id="videoSelect" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors">
+<option value="">❌ 無影片 (僅文案)</option>
+<option value="RANDOM_ANY" selected>🎲 隨機選擇一條影片 (每卡不同)</option>
+<optgroup label="━━━ 🆕 最新視頻 ━━━">
+<optgroup label="━━━ 🆕 11/27 新增 ━━━">
+<option value="http://t.cn/AXLp8nCi">刘宇宁 《心念》11.27</option>
+<option value="http://t.cn/AXLWbXPS">刘宇宁 《别来无恙》11.25</option>
+</optgroup>
+<optgroup label="━━━ 6️⃣ 音乐缘计划2 ━━━">
+<option value="http://tcn/AXLbkrtn">刘宇宁 《告别旅行》舞台11.21</option>
+<option value="http://tcn/AXLGMy0J">刘宇宁 《告别旅行》直拍11.21</option>
+<option value="http://tcn/AXLGPXkF">刘宇宁选歌最有悬念的一集11.21</option>
+<option value="http://tcn/AXLGymUe">刘宇宁把未完的故事唱成篇章11.21</option>
+<option value="http://tcn/AX2HqT7s">刘宇宁《把你的名字念一万遍》11.15</option>
+</optgroup>
+<optgroup label="━━━ 7️⃣ 万两 ━━━">
+<option value="http://tcn/AXLiqKRP">刘宇宁万两MV11.24</option>
+</optgroup>
+<optgroup label="━━━ 🆕 最新视频 ━━━">
+<option value="http://tcn/AX2DHuN9">与宁一起做“真话担当”11.18</option>
+</optgroup>
+<optgroup label="━━━ 3️⃣ OLAY身体护理代言人 ━━━">
+<option value="http://tcn/AXAZ31CE">刘宇宁OLAY身体护理11.1</option>
+</optgroup>
+<optgroup label="━━━ 4️⃣ 碧浪品牌代言人 ━━━">
+<option value="http://tcn/AXAWueo2">刘宇宁碧浪品牌带言了新福利11.4</option>
+<option value="http://tcn/AXwpu3NZ">刘宇宁守护大家的暖绒绒时刻10.24</option>
+</optgroup>
+<optgroup label="━━━ 5️⃣ 神奇的闲鱼代言人 ━━━">
+<option value="http://tcn/AX2HbaHL">刘宇宁在闲鱼点亮的神奇灯牌11.15</option>
+</optgroup>
+<option value="http://tcn/AXLzjlVh">🔥🔥最新播放量1</option>
+<option value="http://tcn/AXLz8d3b">🔥🔥最新播放量2</option>
+<option value="http://tcn/AX2DHuN9">与寧一起做"真話擔當"</option>
+<option value="http://tcn/AXAWueo2">刘宇宁碧浪品牌帶言了新福利</option>
+<option value="http://tcn/AX2Hav4j">🔥提高播放量1</option>
+<option value="http://tcn/AX2Y8IEM">🔥提高播放量2</option>
+<option value="http://tcn/AX2YM0pO">🔥提高播放量3</option>
+<option value="http://tcn/AX2jdnva">🔥提高播放量4</option>
+<option value="http://tcn/AX2HQ4qo">🔥提高播放量5</option>
+<option value="http://tcn/AX2HqT7s">🔥提高播放量6</option>
+<option value="http://tcn/AX2YfeEp">🔥提高播放量7</option>
+<option value="http://tcn/AX2ilbMN">🔥提高播放量8</option>
+<option value="http://tcn/AX2icZqE">🔥提高播放量9</option>
+<option value="http://tcn/AX2VzXH8">🔥提高播放量10</option>
+<option value="http://tcn/AXAFVCJG">最新视频11.9-1</option>
+<option value="http://tcn/AXAF4J3O">最新视频11.9-2</option>
+<option value="http://tcn/AXAkH2Bt">最新视频11.9-3</option>
+<option value="http://tcn/AX24Ozxm">最新视频11.9-4</option>
+<option value="http://tcn/AX2ArD3w">最新视频11.9-5</option>
+<option value="http://tcn/AXAFTVDN">最新视频11.9-6</option>
+<option value="http://tcn/AX2yRsJX">最新视频11.9-7</option>
+<option value="http://tbackground-color: #ea580c; /* Orange-700 */
+}
+.btn-primary:active {
+transform: translateY(1px);
+box-shadow: none;
+}
+
+
+
+/* Template Button Styling (Removed since we use select dropdown now) */
+.tab-btn {
+@apply p-2 sm:px-4 sm:py-2 border-2 border-yellow-500 rounded-lg cursor-pointer transition-all duration-200 text-sm font-semibold bg-white text-yellow-700 shadow-sm;
+}
+.tab-btn.active {
+@apply bg-yellow-500 text-white shadow-md;
+}
+.tab-btn:not(.active):hover {
+@apply bg-yellow-100;
+}
+
+
+/* Loading animation (Orange/Yellow Theme) */
+.loading-spinner {
+display: none;
+justify-content: center;
+align-items: center;
+gap: 10px;
+font-size: 14px;
+font-weight: bold;
+color: #f97316; /* Orange-600 for text */
+padding: 0; /* Adjusted padding */
+}
+.dot {
+width: 8px;
+height: 8px;
+background-color: #fcd34d; /* Yellow-400 dot */
+border-radius: 50%;
+animation: dot-bounce 1s infinite ease-in-out both;
+}
+.dot:nth-child(1) { animation-delay: -0.32s; }
+.dot:nth-child(2) { animation-delay: -0.16s; }
+@keyframes dot-bounce {
+0%, 80%, 100% { transform: scale(0); }
+40% { transform: scale(1.0); }
+}
+
+
+
+/* Copy Card Style (for batch results) */
+.copy-card {
+@apply p-4 border border-yellow-300 bg-white rounded-xl shadow-lg mb-4;
+transition: all 0.5s ease-out;
+opacity: 1;
+}
+.copy-card.fade-out {
+opacity: 0;
+height: 0;
+margin-top: 0;
+padding-top: 0;
+padding-bottom: 0;
+overflow: hidden;
+}
+
+
+
+/* Custom Toast Styles */
+.toast {
+position: fixed;
+top: 20px;
+right: 20px;
+padding: 15px 25px;
+border-radius: 12px;
+box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+display: none;
+align-items: center;
+gap: 10px;
+z-index: 1000;
+animation: slideIn 0.3s ease;
+color: white;
+font-weight: 600;
+}
+.toast.show { display: flex; }
+.toast-success { background-color: #10b981; }
+.toast-warning { background-color: #f59e0b; }
+.toast-error { background-color: #ef4444; }
+.toast-info { background-color: #3b82f6; }
+
+
 
 /* Ensure two columns on medium screens (md) for better preview visibility */
 @media (min-width: 768px) {
@@ -1074,3 +1310,4 @@ window.saveSettings = saveSettings;
 </body>
 </html>
 </html>
+
